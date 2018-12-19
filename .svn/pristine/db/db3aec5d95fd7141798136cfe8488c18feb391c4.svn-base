@@ -1,0 +1,186 @@
+<template>
+  <div id="main" class="detail">
+    <div>
+      <img src="@/images/u14.png" alt="">
+      <img :src="data.imgUrl" alt="" class="shopImg">
+    </div>
+    <div class="lsact_discount">
+      <img src="@/images/u25.png" alt="">
+    </div>
+    <div class="lsact_button" @mousedown="mousedown()" @mouseup="mouseup()" @click="shareActShop()">
+      <img :src="srcUrl" alt="">
+    </div>
+    <div class="lsact_title">
+      <img src="@/images/u15.png" alt="">
+    </div>
+    <list :lists="lists" :listHeight="listHeight"></list>
+    <div v-if="showModal" class="showModal">
+      <img src="@/images/close.svg" class="closeBtn" @click="closeModal()">
+      <img :src="shareImg" alt="" class="shareImg">
+      <div>长按图片保存</div>
+    </div>
+    <div class="mask" v-if="showModal"></div>
+  </div>
+</template>
+
+<script>
+  import list from "@/components/List";
+
+  export default {
+    components: {
+      list
+    },
+    data() {
+      return {
+        lists: [],
+        listHeight: "detail_Height",
+        srcUrl: require("@/images/u26.png"),
+        data: {},
+        shareImg: "",
+        showModal: false,
+      };
+    },
+    mounted() {
+      // this.LinkerShow.login({
+      //   data: {
+      //     username: "admin",
+      //     password: 123456
+      //   }
+      // });
+      this.getActShop();
+    },
+    // 在当前路由改变，但是该组件被复用时调用
+    beforeRouteUpdate(to, from, next) {
+      this.getActShop();
+      next();
+    },
+    methods: {
+      // 获取所以活动商家的信息
+      getActShop() {
+        this.LinkerShow.api.st.getActShop({
+          data: {
+            id: this.$route.query.id
+          },
+          success: res => {
+            this.data = res;
+            this.lists = res.nearShops;
+          },
+          fail: err => {
+            console.log(err);
+          }
+        });
+      },
+      mousedown() {
+        this.srcUrl = require("@/images/u26_mouseDown.png");
+      },
+      mouseup() {
+        setTimeout(() => {
+          this.srcUrl = require("@/images/u26.png");
+        }, 200);
+      },
+      // 分享活动商家详情页
+      shareActShop() {
+        this.LinkerShow.api.st.shareActShop({
+          data: {
+            id: this.$route.query.id
+          },
+          success: res => {
+            this.showModal = true;
+            document.getElementsByTagName("body")[0].className="ofHidden"
+            this.shareImg = res;
+          },
+          fail: err => {
+            console.log(err);
+          }
+        });
+      },
+      closeModal() {
+        this.showModal = false;
+        document.getElementsByTagName("body")[0].className=""
+      }
+    }
+  };
+</script>
+
+<style lang="less">
+  #main {
+    .lsact_discount {
+      position: absolute;
+      top: 257px;
+      left: 0px;
+      height: 259px;
+      padding: 0 12px;
+    }
+
+    .lsact_button {
+      position: absolute;
+      top: 427px;
+      right: 15px;
+      height: 48px;
+      width: 172px;
+    }
+  }
+
+  #main.detail {
+    .shopImg {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      z-index: -1;
+      width: 299px;
+      height: 220px;
+    }
+
+    .lsact_title {
+      position: absolute;
+      top: 525px;
+      left: 0;
+      height: 27px;
+      padding: 0 38px;
+    }
+
+    .showModal {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      text-align: center;
+      z-index: 999;
+      color: #fff;
+      font-size: 14Px
+    }
+
+    .shareImg {
+      width: 284px;
+      height: 568px;
+      margin: 30px 0 15px 0;
+    }
+
+    .closeBtn {
+      position: absolute;
+      top: 25px;
+      right: 18px;
+      width: 40px;
+      height: 40px;
+      color: #fff;
+    }
+
+    .mask {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #333;
+      z-index: 9;
+      opacity: 0.7;
+    }
+  }
+.ofHidden{
+  overflow: hidden;
+}
+  .detail_Height {
+    top: 575px;
+  }
+</style>

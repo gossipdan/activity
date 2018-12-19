@@ -1,0 +1,86 @@
+<template>
+  <div id="main">
+    <div class="lsact_head">
+    <img src="@/images/u45.png" alt="">
+    </div>
+
+    <div class="lsact_content">
+    <img src="@/images/u46.png" alt="">
+    </div>
+    <div class="lsact_title">
+    <img src="@/images/u15.png" alt="">
+    </div>
+    <list :lists="lists" :listHeight="listHeight"></list>
+  </div>
+</template>
+
+<script>
+import list from "@/components/List";
+
+export default {
+  components: {
+    list
+  },
+   data() {
+    return {
+      lists: [],
+      listHeight:'main_Height'
+    };
+  },
+  mounted() {
+     this.LinkerShow.login({
+      data: {
+        username: "admin",
+        password: 123456
+      }
+    });
+    this.getActShops();
+    
+  },
+  methods: {
+    getActShops() {
+      this.LinkerShow.api.st.getActShops({
+        success: res => {
+          console.log(res);
+          this.lists = res;
+        },
+        fail: err => {
+          console.log(err);
+        }
+      });
+    }
+  }
+ 
+};
+</script>
+
+<style lang="less">
+#main {
+
+  .lsact_head {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 237px;
+  }
+  .lsact_content {
+    position: absolute;
+    top: 257px;
+    left: 0px;
+    height: 137px;
+    padding: 0 12px;
+  }
+  .lsact_title {
+    position: absolute;
+    top: 410px;
+    left: 0;
+    height: 27px;
+    padding: 0 38px;
+  }
+}
+.main_Height{
+  top:455px
+}
+
+</style>
+

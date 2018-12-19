@@ -1,0 +1,78 @@
+<template>
+  <div id="list" :class="listHeight">
+    <div class="lsact_list">
+      <div v-for="(list,index) in lists" :key='index' @click="goDetail(list.id)">
+        <!-- <img :src="list.linkUrl" alt="" onerror="@/images/u16.png" v-if="list.linkUrl"> -->
+        <img src="@/images/u16.png" alt="">
+        <span>{{list.shopName}}</span>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="lsact_bottom">
+      <p>特别说明：具体活动折扣以商家前台结算为准，</p>
+      <p>汕头市邻里秀科技有限公司对本活动保留最终解释权</p>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+   props: ["lists",'listHeight'],
+
+  mounted() {
+  },
+  methods: {
+    
+    goDetail(id){
+      this.$router.push({ path: '/detail', query: { id: id } })
+    }
+  }
+};
+</script>
+
+<style lang="less">
+#list {
+    position: absolute;
+  left: 0;
+
+  .lsact_list {
+    padding: 0 38px;
+    width: 100%;
+
+    div {
+      float: left;
+      position: relative;
+
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+        display: block;
+        margin-right: 33px;
+      }
+
+      span {
+        font-size: 12px;
+        text-align: center;
+        width: 60px;
+        margin: 5px 0 17px 0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        -webkit-text-overflow: ellipsis;
+        -moz-text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+  .lsact_bottom {
+    display: block;
+    font-size: 11px;
+    color: #999;
+    margin-left: 54px;
+    p:last-child {
+      margin-left: 90px;
+    }
+  }
+}
+</style>

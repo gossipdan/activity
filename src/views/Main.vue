@@ -1,0 +1,82 @@
+<template>
+  <div id="main">
+    <div class="lsact_head">
+      <img src="@/images/u14.png" alt>
+    </div>
+    <div class="lsact_content">
+      <img src="@/images/u15.png" alt>
+    </div>
+    <div class="lsact_title">
+      <img src="@/images/u16.png" alt>
+    </div>
+    <list :lists="lists" :listHeight="listHeight"></list>
+  </div>
+</template>
+
+<script>
+import list from "@/components/List";
+
+export default {
+  components: {
+    list
+  },
+  data() {
+    return {
+      lists: [],
+      listHeight: "main_Height"
+    };
+  },
+  mounted() {
+    // this.LinkerShow.login({
+    //   data: {
+    //     username: "admin",
+    //     password: "linker8888show~"
+    //   },
+    //   success: () => {
+        this.getActShops();
+    //   }
+    // });
+  },
+  methods: {
+    // 获取所以活动商家的信息
+    getActShops() {
+      this.LinkerShow.api.st.getActShops({
+        success: res => {
+          this.lists = res;
+        },
+        fail: err => {
+          console.log(err);
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style lang="less">
+#main {
+  .lsact_head {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 264px;
+  }
+  .lsact_content {
+    position: absolute;
+    top: 260px;
+    left: 0px;
+    height: 134px;
+  }
+  .lsact_title {
+    position: absolute;
+    top: 434px;
+    left: 25px;
+    height: 28px;
+    width: 124px;
+  }
+}
+.main_Height {
+  top: 475px;
+}
+</style>
+

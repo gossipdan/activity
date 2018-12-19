@@ -1,0 +1,27 @@
+{
+  "name": "wxactivity",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "lib-flexible": "^0.3.2",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "axios": "^0.18.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "normalize.css": "^8.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-px2rem": "^0.3.0",
+    "px2rem-loader": "^0.1.9",
+    "vue-cli-plugin-axios": "0.0.4",
+    "vue-template-compiler": "^2.5.17"
+  }
+}
